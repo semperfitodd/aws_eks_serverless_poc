@@ -17,7 +17,7 @@ spec:
       values: |- {{- toYaml . | nindent 8 }}
     {{- end }}
     repoURL: https://kubernetes.github.io/autoscaler
-    targetRevision: 9.9.2
+    targetRevision: 9.28.0
   syncPolicy:
     automated:
       prune: true
