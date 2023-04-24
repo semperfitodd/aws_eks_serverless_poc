@@ -21,4 +21,3 @@ spec:
       name: argo-cd-argocd-server
       port:
         number: 443
-  ingressClassName: alb
