@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.spec.appName }}
+  name: {{ .Values.spec.appName }}
+  namespace: {{ .Values.spec.appName }}
+spec:
+  replicas: {{ .Values.spec.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.spec.appName }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 10%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.spec.appName }}
+    spec:
+      containers:
+      - image: {{ .Values.spec.appImage }}
+        name: {{ .Values.spec.appName }}
+        volumeMounts:
+          - mountPath: /usr/share/nginx/html/
+            name: {{ .Values.spec.appName }}
+        ports:
+        - containerPort: {{ .Values.spec.containerPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.spec.containerPort }}
+          failureThreshold: 1
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.spec.containerPort }}
+          failureThreshold: 2
+          periodSeconds: 10
+        startupProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.spec.containerPort }}
+          failureThreshold: 3
+          periodSeconds: 20
+      volumes:
+        - name: {{ .Values.spec.appName }}
+          configMap:
+            name: {{ .Values.spec.appName }}
