@@ -4,7 +4,7 @@ appEnvironments:
     awsAccountNumber: '704855531002'
     publicDomain: bsisandbox.com #Domain for DNS records
     publicDomainId: Z0513001X3L0IE4KY37F #Route 53 Zone ID
-    repoUrl: https://github.com/semperfitodd/aws_eks_serverless_poc.git
+    repoUrl: git@github.com:semperfitodd/aws_eks_serverless_poc.git
     clusterAutoscaler:
       values:
         extraArgs:
