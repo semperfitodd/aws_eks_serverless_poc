@@ -1,7 +1,7 @@
 appEnvironments:
   dev:
-    argoHostname: argo-poc-argocd.bsisandbox.com
+    argoHostname: argocd.bsisandbox.com
     awsAccountNumber: '704855531002'
     publicDomain: bsisandbox.com #Domain for DNS records
     publicDomainId: Z0513001X3L0IE4KY37F #Route 53 Zone ID
-    repoUrl: git@github.com:semperfitodd/aws_eks_serverless_poc.git
+    repoUrl: https://github.com/semperfitodd/aws_eks_serverless_poc.git
