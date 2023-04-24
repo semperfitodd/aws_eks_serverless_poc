@@ -35,7 +35,7 @@ spec:
       - name: serviceAccount.annotations.eks\.amazonaws\.com/role-arn
         value: arn:aws:iam::{{ $values.awsAccountNumber }}:role/AmazonEKSRoute53ExternalDNS
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 6.2.7
+    targetRevision: 6.18.0
   syncPolicy:
     automated:
       prune: true
