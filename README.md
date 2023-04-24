@@ -29,3 +29,6 @@ kubectl apply -f https://github.com/kubernetes-sigs/aws-load-balancer-controller
 cd k8s/master
 helm template . |k apply -f -
 ```
+
+## Connect ArgoCD to git repo
+![argo_repo.png](images%2Fargo_repo.png)
