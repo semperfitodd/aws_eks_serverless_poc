@@ -21,10 +21,11 @@ spec:
       valueFiles:
         - values.yaml
       values: |-
-        ingress:
-          hostName: {{ .ingress.hostName }}
-        applications:
-{{ toYaml .applications | nindent 10 }}
+        apps:
+        - name: {{ .name }}
+          ingress:
+            hostName: {{ .ingress.hostName }}
+          applications: {{ toYaml .applications | nindent 12 }}
         project: {{ $.Values.spec.project }}
         repoUrl: {{ $.Values.spec.repoUrl }}
   syncPolicy:
