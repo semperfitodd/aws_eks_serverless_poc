@@ -23,7 +23,10 @@ spec:
       values: |-
         ingress:
           hostName: {{ .ingress.hostName }}
-        applications: {{ toYaml .applications | nindent 2 }}
+        applications:
+{{ toYaml .applications | nindent 10 }}
+        project: {{ $.Values.spec.project }}
+        repoUrl: {{ $.Values.spec.repoUrl }}
   syncPolicy:
     automated:
       prune: true
