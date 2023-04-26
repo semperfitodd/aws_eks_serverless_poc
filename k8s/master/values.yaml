@@ -1,6 +1,7 @@
 appEnvironments:
   dev:
     argoHostname: aws-eks-serverless-poc-argocd.bsisandbox.com
+    clusterName: aws-eks-serverless-poc
     awsAccountNumber: '704855531002'
     publicDomain: bsisandbox.com #Domain for DNS records
     publicDomainId: Z0513001X3L0IE4KY37F #Route 53 Zone ID

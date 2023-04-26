@@ -21,14 +21,54 @@ go to URL -> https://localhost:8080
 ```bash
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.11.1/cert-manager.yaml
 
-kubectl apply -f https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.5.1/v2_5_1_full.yaml
-```
-
-## Deploy to kuberenetes
-```bash
-cd k8s/master
-helm template . |k apply -f -
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+    -n kube-system \
+    --set clusterName=<CLUSTER_NAME> \
+    --set serviceAccount.create=false \
+    --set serviceAccount.name=aws-load-balancer-controller
 ```
 
 ## Connect ArgoCD to git repo
 ![argo_repo.png](images%2Fargo_repo.png)
+
+## Deploy to kuberenetes
+```bash
+cd k8s/master
+
+helm template . |k apply -f -
+```
+
+## Login to ECR
+```bash
+aws --profile <AWS_PROFILE> \
+  ecr get-login-password \
+  --region <AWS_REGION> | \
+  docker login \
+  --username AWS --password-stdin \
+  <AWS_ACCOUNT>.dkr.ecr.<AWS_REGION>.amazonaws.com
+```
+
+## Package up springboot_0
+```bash
+cd docker/springboot_0
+
+mvn clean install
+mvn clean package
+
+docker build --platform=linux/amd64 -t <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_0:latest .
+docker push <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_0:latest
+```
+
+## Package up springboot_1
+```bash
+cd docker/springboot_1
+
+mvn clean install
+mvn clean package
+
+
+docker build --platform=linux/amd64 -t <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest .
+docker push <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest
+```

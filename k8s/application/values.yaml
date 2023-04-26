@@ -1,33 +1,15 @@
 apps:
-  app0:
-    backgroundColor: yellow
-    containerPort: 80
-    hostName: argo-poc-app0.bsisandbox.com
-    image:
-      repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/nginx:5
-    name: app0
-    replicas: 5
-  app1:
-    backgroundColor: red
-    containerPort: 80
-    hostName: argo-poc-app1.bsisandbox.com
-    image:
-      repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/nginx:5
-    name: app1
-    replicas: 5
-  app2:
-    backgroundColor: blue
-    containerPort: 80
-    hostName: argo-poc-app2.bsisandbox.com
-    image:
-      repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/nginx:5
-    name: app2
-    replicas: 5
-  app3:
-    backgroundColor: pink
-    containerPort: 80
-    hostName: argo-poc-app3.bsisandbox.com
-    image:
-      repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/nginx:5
-    name: app3
-    replicas: 5
+  - name: springboot
+    ingress:
+      hostName: aws-eks-serverless-poc-app.bsisandbox.com
+    applications:
+      - name: springboot-0
+        image:
+          repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_0:latest
+        containerPort: 8080
+        replicas: 1
+      - name: springboot-1
+        image:
+          repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest
+        containerPort: 8080
+        replicas: 1

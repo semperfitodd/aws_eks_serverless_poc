@@ -1,15 +1,10 @@
-{{ range $apps, $values := .Values.apps }}
-{{ $appName := $values.name }}
-{{ $appImage := $values.image.repo }}
-{{ $containerPort := $values.containerPort }}
-{{ $hostName := $values.hostName }}
-{{ $project := $.Values.spec.project }}
+{{- range .Values.apps }}
 {{- /* guarantees --- is on a newline */ -}}
 {{ printf "\n---" }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ $appName }}
+  name: {{ .name }}
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -17,24 +12,20 @@ spec:
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
-  project: {{ $project }}
+  project: {{ $.Values.spec.project }}
   source:
     path: k8s/microservices
-    repoURL: {{ $.Values.spec.repoUrl}}
+    repoURL: {{ $.Values.spec.repoUrl }}
     targetRevision: HEAD
     helm:
       valueFiles:
         - values.yaml
       values: |-
-        spec:
-          appImage: {{ $appImage }}
-          appName: {{ $appName }}
-          backgroundColor: {{ $values.backgroundColor }}
-          containerPort: {{ $containerPort }}
-          hostName: {{ $hostName }}
-          project: {{ $project }}
-          replicas: {{ $values.replicas }}
-          repoUrl: {{ $.Values.spec.repoUrl }}
+        ingress:
+          hostName: {{ .ingress.hostName }}
+        applications: {{ toYaml .applications | nindent 2 }}
+        project: {{ $.Values.spec.project }}
+        repoUrl: {{ $.Values.spec.repoUrl }}
   syncPolicy:
     automated:
       prune: true
@@ -45,4 +36,4 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m0s
-{{ end }}
+{{- end }}
