@@ -50,12 +50,9 @@ spec:
     targetRevision: main
     path: charts/prometheus-adapter
     helm:
-      valueFiles:
-        - values.yaml
-      values: |
-        prometheus:
-          url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
-          port: 9090
+      {{- with $values.prometheus.values }}
+      values: |- {{- toYaml . | nindent 8 }}
+    {{- end }}
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

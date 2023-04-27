@@ -24,3 +24,8 @@ appEnvironments:
             name: cluster-autoscaler
             annotations:
               eks.amazonaws.com/role-arn: arn:aws:iam::704855531002:role/cluster_autoscaler
+    prometheus:
+      values:
+        prometheus:
+          url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
+          port: 9090
