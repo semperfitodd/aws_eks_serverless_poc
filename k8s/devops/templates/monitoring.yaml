@@ -19,8 +19,6 @@ spec:
     targetRevision: 44.3.0
     path: charts/kube-prometheus-stack
     helm:
-      valueFiles:
-        - values.yaml
       values: |
   destination:
     server: https://kubernetes.default.svc
