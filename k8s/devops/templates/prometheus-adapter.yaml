@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prometheus-adapter
+  namespace: monitoring
+spec:
+  releaseName: prometheus-adapter
+  chart:
+    repository: https://prometheus-community.github.io/helm-charts
+    name: prometheus-adapter
+    version: 4.2.0
+  targetNamespace: monitoring
+  values:
+    prometheus:
+      url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
+      port: 9090

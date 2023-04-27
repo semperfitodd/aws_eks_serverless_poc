@@ -15,6 +15,7 @@ spec:
     - {{ $.Values.appEnvironments.dev.repoUrl }}
     - https://charts.bitnami.com/bitnami
     - https://kubernetes.github.io/autoscaler
+    - https://prometheus-community.github.io
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
