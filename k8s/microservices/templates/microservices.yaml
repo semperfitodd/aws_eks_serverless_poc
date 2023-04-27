@@ -53,7 +53,7 @@ spec:
         - containerPort: {{ .containerPort }}
         resources:
           requests:
-            cpu: 500m
+            cpu: 1500m
           limits:
             cpu: 1500m
 ---
