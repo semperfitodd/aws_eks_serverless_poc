@@ -17,7 +17,7 @@ spec:
   source:
     repoURL: 'https://github.com/prometheus-community/helm-charts'
     path: charts/kube-prometheus-stack
-    targetRevision: main
+    targetRevision: HEAD
     helm:
       version: 45.9.1
       values: |
