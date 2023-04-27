@@ -19,7 +19,7 @@ spec:
     path: charts/kube-prometheus-stack
     targetRevision: main
     helm:
-      version: 45.21.0
+      version: 45.9.1
       values: |
         # Add any custom values here if needed
   destination:
