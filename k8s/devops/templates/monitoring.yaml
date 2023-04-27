@@ -16,10 +16,9 @@ spec:
   project: {{ $environment }}
   source:
     repoURL: https://github.com/prometheus-community/helm-charts
-    targetRevision: 44.3.0
+    targetRevision: 45.21.0
     path: charts/kube-prometheus-stack
     helm:
-      version: "44.3.0"
       values: |
         # Add any custom values here if needed
   destination:
