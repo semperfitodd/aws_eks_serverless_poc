@@ -37,7 +37,6 @@ metadata:
   name: {{ .name }}
   namespace: {{ $.name }}
 spec:
-  replicas: {{ .replicas }}
   selector:
     matchLabels:
       app: {{ .name }}
