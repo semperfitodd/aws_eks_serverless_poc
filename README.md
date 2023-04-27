@@ -1,6 +1,44 @@
 # aws_eks_serverless_poc
 
 ## Deploy Terraform
+```bash
+terraform init
+terraform plan -out=plan.out
+terraform apply plan.out
+```
+
+## Login to ECR
+```bash
+aws --profile <AWS_PROFILE> \
+  ecr get-login-password \
+  --region <AWS_REGION> | \
+  docker login \
+  --username AWS --password-stdin \
+  <AWS_ACCOUNT>.dkr.ecr.<AWS_REGION>.amazonaws.com
+```
+
+## Package up springboot_0
+```bash
+cd docker/springboot_0
+
+mvn clean install
+mvn clean package
+
+docker build --platform=linux/amd64 -t <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_0:latest .
+docker push <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_0:latest
+```
+
+## Package up springboot_1
+```bash
+cd docker/springboot_1
+
+mvn clean install
+mvn clean package
+
+
+docker build --platform=linux/amd64 -t <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest .
+docker push <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest
+```
 
 ## Connect to EKS
 ```bash
@@ -38,37 +76,4 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 cd k8s/master
 
 helm template . |k apply -f -
-```
-
-## Login to ECR
-```bash
-aws --profile <AWS_PROFILE> \
-  ecr get-login-password \
-  --region <AWS_REGION> | \
-  docker login \
-  --username AWS --password-stdin \
-  <AWS_ACCOUNT>.dkr.ecr.<AWS_REGION>.amazonaws.com
-```
-
-## Package up springboot_0
-```bash
-cd docker/springboot_0
-
-mvn clean install
-mvn clean package
-
-docker build --platform=linux/amd64 -t <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_0:latest .
-docker push <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_0:latest
-```
-
-## Package up springboot_1
-```bash
-cd docker/springboot_1
-
-mvn clean install
-mvn clean package
-
-
-docker build --platform=linux/amd64 -t <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest .
-docker push <AWS_ACCOUNT>.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest
 ```

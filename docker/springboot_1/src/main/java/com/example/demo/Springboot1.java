@@ -17,7 +17,15 @@ public class Springboot1 {
 
         @GetMapping("/")
         public String helloWorld() {
-            return "Hello World";
+            new Thread(() -> generateCpuLoad(10000)).start();
+            return "Hello from spingboot_1 deployment";
+        }
+
+        private void generateCpuLoad(long durationMillis) {
+            long startTime = System.currentTimeMillis();
+            while (System.currentTimeMillis() - startTime < durationMillis) {
+                Math.random();
+            }
         }
     }
 }
