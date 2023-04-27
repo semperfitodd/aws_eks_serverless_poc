@@ -1,3 +1,5 @@
+{{ range $environment, $values := .Values.appEnvironments }}
+
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -5,19 +7,34 @@ metadata:
 
 ---
 
-apiVersion: helm.fluxcd.io/v1
-kind: HelmRelease
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
   name: prometheus
-  namespace: monitoring
+  namespace: argocd
 spec:
-  releaseName: prometheus
-  chart:
-    repository: https://prometheus-community.github.io/helm-charts
-    name: kube-prometheus-stack
-    version: 45.21.0
-  targetNamespace: monitoring
-  values:
+  project: {{ $environment }}
+  source:
+    repoURL: https://github.com/prometheus-community/helm-charts
+    targetRevision: main
+    path: charts/kube-prometheus-stack
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m0s
 
 ---
 
@@ -37,3 +54,5 @@ spec:
     prometheus:
       url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
       port: 9090
+
+{{ end }}
