@@ -13,3 +13,17 @@ apps:
           repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest
         containerPort: 8080
         replicas: 1
+  - name: springboot-new
+    ingress:
+      hostName: aws-eks-serverless-poc-app.bsisandbox.com
+    applications:
+      - name: springboot-0
+        image:
+          repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_0:latest
+        containerPort: 8080
+        replicas: 1
+      - name: springboot-1
+        image:
+          repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:latest
+        containerPort: 8080
+        replicas: 1
