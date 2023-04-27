@@ -16,7 +16,7 @@ spec:
   project: {{ $environment }}
   source:
     repoURL: https://github.com/prometheus-community/helm-charts
-    targetRevision: 45.21.0
+    targetRevision: 45.20.0
     path: charts/kube-prometheus-stack
     helm:
       valueFiles:
