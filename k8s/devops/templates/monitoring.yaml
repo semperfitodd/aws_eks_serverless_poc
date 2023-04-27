@@ -13,17 +13,17 @@ metadata:
   name: prometheus
   namespace: argocd
 spec:
-  project: {{ $environment }}
+  project: devops
   source:
-    repoURL: https://github.com/prometheus-community/helm-charts
-    targetRevision: 45.21.0
+    repoURL: 'https://github.com/prometheus-community/helm-charts'
     path: charts/kube-prometheus-stack
+    targetRevision: main
     helm:
       version: 45.21.0
       values: |
         # Add any custom values here if needed
   destination:
-    server: https://kubernetes.default.svc
+    server: 'https://kubernetes.default.svc'
     namespace: monitoring
   syncPolicy:
     automated:
@@ -35,7 +35,6 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m0s
-
 
 ---
 
