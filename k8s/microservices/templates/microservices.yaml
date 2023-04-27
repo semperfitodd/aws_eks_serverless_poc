@@ -34,8 +34,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ $.name }}
-  namespace: {{ $.Values.name }}
+  name: {{ .name }}
+  namespace: {{ $.name }}
 spec:
   replicas: {{ .replicas }}
   selector:
