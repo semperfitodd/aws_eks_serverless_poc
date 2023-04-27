@@ -17,11 +17,7 @@ spec:
   source:
     repoURL: 'https://github.com/prometheus-community/helm-charts'
     path: charts/kube-prometheus-stack
-    targetRevision: HEAD
-    helm:
-      version: 45.9.1
-      values: |
-        # Add any custom values here if needed
+    targetRevision: 45.9.1
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: monitoring
