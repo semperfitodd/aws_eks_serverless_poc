@@ -18,14 +18,21 @@ public class Springboot1 {
         @GetMapping("/")
         public String helloWorld() {
             new Thread(() -> generateCpuLoad(10000)).start();
-            return "Hello from spingboot_1 deployment";
+            return "Hello from springboot_1 deployment";
         }
 
         private void generateCpuLoad(long durationMillis) {
             long startTime = System.currentTimeMillis();
             while (System.currentTimeMillis() - startTime < durationMillis) {
-                Math.random();
+                fibonacci(40);
             }
+        }
+
+        private long fibonacci(long n) {
+            if (n <= 1) {
+                return n;
+            }
+            return fibonacci(n - 1) + fibonacci(n - 2);
         }
     }
 }

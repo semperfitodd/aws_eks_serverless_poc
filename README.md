@@ -68,6 +68,11 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
     --set serviceAccount.name=aws-load-balancer-controller
 ```
 
+## Install metrics-server
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
 ## Connect ArgoCD to git repo
 ![argo_repo.png](images%2Fargo_repo.png)
 
