@@ -18,6 +18,10 @@ spec:
     repoURL: 'https://github.com/prometheus-community/helm-charts'
     path: charts/kube-prometheus-stack
     targetRevision: kube-prometheus-stack-40.5.0
+    helm:
+          {{- with $values.prometheus-chart.values }}
+      values: |- {{- toYaml . | nindent 8 }}
+        {{- end }}
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: monitoring
@@ -61,6 +65,6 @@ spec:
       backoff:
         duration: 5s
         factor: 2
-        maxDuration: 3m0s
+        maxDuration: 3m0s0
 
 {{ end }}

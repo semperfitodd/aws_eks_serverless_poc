@@ -82,5 +82,20 @@ spec:
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 60
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .name }}-service-monitor
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: {{ .name }}
+  endpoints:
+  - port: 80
+    interval: 3s
+    path: /actuator/prometheus
 {{- end }}
 {{- end }}
