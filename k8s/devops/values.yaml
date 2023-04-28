@@ -35,7 +35,7 @@ appEnvironments:
           prometheusSpec:
             serviceMonitorSelector:
               matchLabels:
-                app: prometheus
+                app: {}
             namespaceSelector:
               matchNames:
                 - monitoring
