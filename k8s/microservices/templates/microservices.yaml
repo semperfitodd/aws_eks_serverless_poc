@@ -89,7 +89,7 @@ metadata:
   name: {{ .name }}-service-monitor
   namespace: {{ $.name }}
   labels:
-    release: prometheus
+    app: prometheus
 spec:
   selector:
     matchLabels:
