@@ -36,6 +36,4 @@ appEnvironments:
             serviceMonitorSelector:
               matchLabels: {}
             namespaceSelector:
-              matchNames:
-                - monitoring
-                - springboot
+              matchNames: {}
