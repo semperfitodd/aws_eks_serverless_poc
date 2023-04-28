@@ -19,9 +19,9 @@ spec:
     path: charts/kube-prometheus-stack
     targetRevision: kube-prometheus-stack-40.5.0
     helm:
-          {{- with $values.prometheus-chart.values }}
+      {{- with $values.prometheus.values }}
       values: |- {{- toYaml . | nindent 8 }}
-        {{- end }}
+    {{- end }}
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: monitoring
