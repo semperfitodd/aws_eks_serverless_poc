@@ -19,7 +19,7 @@ spec:
     path: charts/kube-prometheus-stack
     targetRevision: kube-prometheus-stack-40.5.0
     helm:
-      {{- with $values.prometheus.values }}
+      {{- with $values.prometheusStack.values }}
       values: |- {{- toYaml . | nindent 8 }}
     {{- end }}
   destination:

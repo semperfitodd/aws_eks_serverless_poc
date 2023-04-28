@@ -29,7 +29,7 @@ appEnvironments:
         prometheus:
           url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
           port: 9090
-    prometheus-stack:
+    prometheusStack:
       values:
         prometheus:
           prometheusSpec:
