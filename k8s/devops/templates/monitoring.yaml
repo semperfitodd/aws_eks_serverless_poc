@@ -15,10 +15,11 @@ metadata:
 spec:
   project: devops
   source:
-    version: 42.3.0
     repoURL: 'https://github.com/prometheus-community/helm-charts'
     path: charts/kube-prometheus-stack
     targetRevision: main
+    helm:
+      version: 42.3.0
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: monitoring
