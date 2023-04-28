@@ -91,12 +91,12 @@ metadata:
   labels:
     release: prometheus
 spec:
-  endpoints:
-    - interval: 3s
-      path: /actuator/prometheus
-      port: '80'
   selector:
     matchLabels:
-      app: prometheus
+      name: {}
+  endpoints:
+  - port: "80"
+    interval: 3s
+    path: /actuator/prometheus
 {{- end }}
 {{- end }}
