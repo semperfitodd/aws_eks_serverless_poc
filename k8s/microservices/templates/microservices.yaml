@@ -90,13 +90,13 @@ metadata:
   namespace: {{ $.name }}
   labels:
     release: prometheus
-spec:
+sspec:
+  endpoints:
+    - interval: 3s
+      path: /actuator/prometheus
+      port: '80'
   selector:
     matchLabels:
-      name: {{ .name }}
-  endpoints:
-  - port: "80"
-    interval: 3s
-    path: /actuator/prometheus
+      app: prometheus
 {{- end }}
 {{- end }}
