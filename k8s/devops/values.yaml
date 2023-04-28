@@ -33,10 +33,9 @@ appEnvironments:
       values:
         prometheus:
           prometheusSpec:
-            serviceMonitorNamespaceSelector:
-              matchNames:
-                - monitoring
-                - springboot
+            serviceMonitorSelector:
+              matchLabels:
+                app: prometheus
             namespaceSelector:
               matchNames:
                 - monitoring
