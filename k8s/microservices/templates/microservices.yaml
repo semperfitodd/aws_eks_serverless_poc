@@ -95,7 +95,7 @@ spec:
     matchLabels:
       name: {{ .name }}
   endpoints:
-  - port: 80
+  - port: "80"
     interval: 3s
     path: /actuator/prometheus
 {{- end }}
