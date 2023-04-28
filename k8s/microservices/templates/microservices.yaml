@@ -92,8 +92,7 @@ metadata:
     app: prometheus
 spec:
   selector:
-    matchLabels:
-      name: {}
+    matchLabels: {}
   endpoints:
   - port: "80"
     interval: 3s
