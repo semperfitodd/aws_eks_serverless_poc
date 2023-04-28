@@ -90,7 +90,7 @@ metadata:
   namespace: {{ $.name }}
   labels:
     release: prometheus
-sspec:
+spec:
   endpoints:
     - interval: 3s
       path: /actuator/prometheus
