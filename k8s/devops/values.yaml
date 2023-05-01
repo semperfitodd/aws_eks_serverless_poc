@@ -28,19 +28,16 @@ appEnvironments:
     prometheus:
       values:
         prometheus:
-            port: 9090
-            url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
-        rules:
-          custom:
-            - seriesQuery: 'http_server_requests_seconds_count{kubernetes_namespace!="",kubernetes_pod_name!="",uri!="/actuator/prometheus"}'
-              resources:
-                overrides:
-                  kubernetes_namespace: { resource: "namespace" }
-                  kubernetes_pod_name: { resource: "pod" }
-              name:
-                matches: "^(.*)_total"
-                as: "http_requests_per_minute"
-              metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)'
+          port: 9090
+          url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
+        extraVolumes:
+          - name: adapter-config
+            configMap:
+              name: prometheus-adapter
+        extraVolumeMounts:
+          - name: adapter-config
+            mountPath: /etc/adapter/config.yaml
+            subPath: config.yaml
     prometheusStack:
       values:
         prometheus:
