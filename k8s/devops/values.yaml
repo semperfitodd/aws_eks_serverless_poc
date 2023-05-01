@@ -38,7 +38,7 @@ appEnvironments:
               name:
                 matches: "^(.*)_total"
                 as: "http_requests_per_minute"
-              metricsQuery: 'sum(rate(http_server_requests_seconds_count{<<.LabelMatchers>>}[1m])) by (pod)'
+              metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (pod)'
     prometheusStack:
       values:
         prometheus:
