@@ -77,8 +77,8 @@ resource "aws_eks_node_group" "spot" {
   subnet_ids      = module.vpc.private_subnets
 
   scaling_config {
-    desired_size = 1
-    max_size     = 7
+    desired_size = 3
+    max_size     = 20
     min_size     = 1
   }
 

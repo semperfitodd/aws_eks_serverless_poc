@@ -2,6 +2,7 @@ appEnvironments:
   devops:
     argoHostname: aws-eks-serverless-poc-argocd.bsisandbox.com
     awsAccountNumber: '704855531002'
+    monitoringHostname: aws-eks-serverless-poc-monitoring.bsisandbox.com
     publicDomain: bsisandbox.com #Domain for DNS records
     publicDomainId: Z0513001X3L0IE4KY37F #Route 53 Zone ID
     repoUrl: https://github.com/semperfitodd/aws_eks_serverless_poc.git

@@ -1,5 +1,7 @@
 locals {
-  argocd_domain_name = "${local.environment}-${local.kubernetes_namespace}.${var.public_domain}"
+  argocd_domain_name = "${local.environment}-${local.argocd_namespace}.${var.public_domain}"
+
+  argocd_namespace = "argocd"
 
   availability_zones = [
     data.aws_availability_zones.this.names[0],
@@ -29,5 +31,7 @@ locals {
 
   environment = replace(var.environment, "_", "-")
 
-  kubernetes_namespace = "argocd"
+  monitoring_namespace = "monitoring"
+
+  prometheus_domain_name = "${local.environment}-${local.monitoring_namespace}.${var.public_domain}"
 }
