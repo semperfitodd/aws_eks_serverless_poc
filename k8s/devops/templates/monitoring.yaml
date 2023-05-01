@@ -79,18 +79,18 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/target-type: ip
-    external-dns.alpha.kubernetes.io/hostname: {{ .Values.appEnvironments.devops.argoHostname }}
+    external-dns.alpha.kubernetes.io/hostname: {{ .Values.appEnvironments.devops.monitoringHostname }}
   finalizers:
   - ingress.k8s.aws/resources
-  name: argocd-ingress
-  namespace: argocd
+  name: monitoring-ingress
+  namespace: monitoring
 spec:
   tls:
     - hosts:
         - {{ .Values.appEnvironments.devops.argoHostname }}
   defaultBackend:
     service:
-      name: argo-cd-argocd-server
+      name: prometheus-stack-kube-prom-prometheus
       port:
-        number: 443
+        number: 9090
 {{ end }}
