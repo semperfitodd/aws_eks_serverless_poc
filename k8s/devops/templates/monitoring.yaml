@@ -79,7 +79,7 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/target-type: ip
-    external-dns.alpha.kubernetes.io/hostname: {{ .Values.appEnvironments.devops.monitoringHostname }}
+    external-dns.alpha.kubernetes.io/hostname: aws-eks-serverless-poc-monitoring.bsisandbox.com
   finalizers:
   - ingress.k8s.aws/resources
   name: monitoring-ingress
@@ -87,7 +87,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{ .Values.appEnvironments.devops.monitoringHostname }}
+        - aws-eks-serverless-poc-monitoring.bsisandbox.com
   defaultBackend:
     service:
       name: prometheus-stack-kube-prom-prometheus
