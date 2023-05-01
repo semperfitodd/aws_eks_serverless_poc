@@ -51,7 +51,7 @@ appEnvironments:
                 monitoring: prometheus
             rules:
               groups:
-                - name: springboot_http_requests
+                - name: http_requests_per_minute
                   rules:
                     - record: http_requests_per_minute
                       expr: sum(rate(http_server_requests_seconds_count[1m])) by (pod)
