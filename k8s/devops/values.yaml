@@ -30,11 +30,12 @@ appEnvironments:
           url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
           port: 9090
     prometheusStack:
-      values:
+      values: |-
         prometheus:
           prometheusSpec:
+            namespaceSelector:
+              matchNames:
+                - springboot
             serviceMonitorSelector:
               matchLabels:
                 monitoring: prometheus
-            namespaceSelector:
-              matchNames: {}
