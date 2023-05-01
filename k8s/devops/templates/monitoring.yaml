@@ -87,7 +87,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{ .Values.appEnvironments.devops.argoHostname }}
+        - {{ .Values.appEnvironments.devops.monitoringHostname }}
   defaultBackend:
     service:
       name: prometheus-stack-kube-prom-prometheus
