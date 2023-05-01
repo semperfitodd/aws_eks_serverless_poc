@@ -68,6 +68,7 @@ spec:
     app: {{ .name }}
   ports:
     - protocol: TCP
+      name: http
       port: 80
       targetPort: {{ .containerPort }}
 ---
@@ -97,7 +98,7 @@ spec:
     matchLabels:
       monitoring: prometheus
   endpoints:
-  - port: '80'
+  - port: http
     interval: 3s
     path: /actuator/prometheus
 {{- end }}
