@@ -94,7 +94,8 @@ metadata:
     monitoring: prometheus
 spec:
   selector:
-    matchLabels: {}
+    matchLabels:
+      monitoring: prometheus
   endpoints:
   - port: '80'
     interval: 3s
