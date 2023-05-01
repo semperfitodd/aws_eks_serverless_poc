@@ -30,6 +30,15 @@ appEnvironments:
         prometheus:
           url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
           port: 9090
+        rules:
+          custom:
+            - seriesQuery: '{__name__=~"^http_server_requests_seconds_count$"}'
+              resources:
+                template: <<.Resource>>
+              name:
+                matches: "^(.*)_total"
+                as: "http_requests_per_minute"
+              metricsQuery: 'sum(rate(http_server_requests_seconds_count{<<.LabelMatchers>>}[1m])) by (pod)'
     prometheusStack:
       values:
         prometheus:
