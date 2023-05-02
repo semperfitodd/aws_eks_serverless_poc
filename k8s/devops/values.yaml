@@ -40,10 +40,10 @@ appEnvironments:
             mountPath: /etc/adapter
         rules:
           custom:
-            - metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) without (instance, job, namespace) by (pod)
+            - metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (pod) * on(pod) group_left kube_pod_info
               name:
                 as: http_requests_per_minute
-                matches: ^(.*)_total
+                matches: ^(.*)_count
               resources:
                 template: <<.Resource>>
               seriesQuery: '{__name__=~"^http_server_requests_seconds_count$"}'
