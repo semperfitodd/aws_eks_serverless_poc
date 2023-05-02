@@ -36,8 +36,7 @@ appEnvironments:
               name: prometheus-adapter
         extraVolumeMounts:
           - name: adapter-config
-            mountPath: /etc/adapter/config.yaml
-            subPath: config.yaml
+            mountPath: /etc/adapter
     prometheusStack:
       values:
         prometheus:
