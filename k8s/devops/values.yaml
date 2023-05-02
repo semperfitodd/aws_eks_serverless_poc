@@ -37,6 +37,15 @@ appEnvironments:
         extraVolumeMounts:
           - name: adapter-config
             mountPath: /etc/adapter
+        rules:
+          custom:
+            - metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (pod)
+              name:
+                as: http_requests_per_minute
+                matches: ^(.*)_total
+              resources:
+                template: <<.Resource>>
+              seriesQuery: '{__name__=~"^http_server_requests_seconds_count$"}'
     prometheusStack:
       values:
         prometheus:
