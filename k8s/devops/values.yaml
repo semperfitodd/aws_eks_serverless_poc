@@ -27,7 +27,7 @@ appEnvironments:
               eks.amazonaws.com/role-arn: arn:aws:iam::704855531002:role/cluster_autoscaler
     prometheus:
       values:
-        logLevel: 10
+        logLevel: 4
         prometheus:
           port: 9090
           url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
@@ -46,7 +46,7 @@ appEnvironments:
                 matches: ^(.*)_count
               resources:
                 template: <<.Resource>>
-              seriesQuery: '{__name__=~"^http_server_requests_seconds_count$"}'
+              seriesQuery: '{__name__=~"^http_server_requests_seconds_count$", namespace="springboot", job="springboot-1-service-monitor"}'
     prometheusStack:
       values:
         prometheus:
