@@ -54,12 +54,9 @@ appEnvironments:
             namespaceSelector:
               matchNames:
                 - springboot
-            serviceMonitorSelector:
-              matchLabels:
-                monitoring: prometheus
             rules:
               groups:
-                - name: http_requests_per_minute
+                - name: custom.rules
                   rules:
                     - record: http_requests_per_minute
                       expr: sum(rate(http_server_requests_seconds_count[1m])) by (pod)
