@@ -27,25 +27,27 @@ appEnvironments:
               eks.amazonaws.com/role-arn: arn:aws:iam::704855531002:role/cluster_autoscaler
     prometheus:
       values:
-        prometheus:
-          port: 9090
-          url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local
-        extraVolumes:
-          - name: adapter-config
-            configMap:
-              name: prometheus-adapter
         extraVolumeMounts:
-          - name: adapter-config
-            mountPath: /etc/adapter
-        rules:
-          custom:
-            - metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (pod) * on(pod) group_left kube_pod_info
-              name:
-                as: http_requests_per_minute
-                matches: ^(.*)_count
-              resources:
-                template: <<.Resource>>
-              seriesQuery: '{__name__=~"^http_server_requests_seconds_count$", namespace="springboot", job="springboot-1-service-monitor"}'
+          - mountPath: /etc/adapter
+            name: adapter-config
+          extraVolumes:
+            - configMap:
+                name: prometheus-adapter
+              name: adapter-config
+          prometheus:
+            port: 9090
+            url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local
+          rules:
+            custom:
+              - metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (pod) * on(pod)
+                  group_left kube_pod_info
+                name:
+                  as: http_requests_per_minute
+                  matches: ^http_server_requests_seconds_count$
+                resources:
+                  template: <<.Resource>>
+                seriesQuery: '{__name__=~"^http_server_requests_seconds_count$", namespace="springboot",
+                    job="springboot-1-service-monitor"}'
     prometheusStack:
       values:
         prometheus:
