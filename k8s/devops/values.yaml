@@ -30,7 +30,7 @@ appEnvironments:
         logLevel: 4
         prometheus:
           port: 9090
-          url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local
+          url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local
         extraVolumes:
           - name: adapter-config
             configMap:
