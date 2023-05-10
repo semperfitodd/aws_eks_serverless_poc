@@ -89,10 +89,13 @@ spec:
   minReplicas: 1
   maxReplicas: 100
   metrics:
-  - type: Pods
-    pods:
-      metricName: http_server_requests_seconds_sum
-      targetAverageValue: 3
+    - type: Pods
+      pods:
+        metric:
+          name: http_server_requests_seconds_count
+        target:
+          type: AverageValue
+          averageValue: 3
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
