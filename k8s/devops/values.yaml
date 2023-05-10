@@ -44,7 +44,9 @@ appEnvironments:
                 as: http_requests_per_minute
                 matches: ^(.*)_count
               resources:
-                template: 'pod'
+                overrides:
+                  kubernetes_namespace: { resource: "namespace" }
+                  kubernetes_pod_name: { resource: "pod" }
               seriesQuery: '{__name__=~"^springboot_http_requests$", namespace="springboot", job="springboot-1-service-monitor"}'
     prometheusStack:
       values:
