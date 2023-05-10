@@ -76,7 +76,7 @@ spec:
       port: 80
       targetPort: {{ .containerPort }}
 ---
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .name }}-hpa
