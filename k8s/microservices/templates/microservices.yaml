@@ -76,7 +76,7 @@ spec:
       port: 80
       targetPort: {{ .containerPort }}
 ---
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .name }}-hpa
@@ -89,6 +89,7 @@ spec:
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 60
+  scaleDownBehavior: "scaleDown"
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
