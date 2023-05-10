@@ -42,7 +42,7 @@ appEnvironments:
               - metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (pod) * on(pod)
                   group_left kube_pod_info
                 name:
-                  as: http_requests_per_minute
+                  as: springboot_http_requests
                   matches: ^http_server_requests_seconds_count$
                 resources:
                   template: <<.Resource>>
@@ -54,7 +54,7 @@ appEnvironments:
           prometheusSpec:
             rules:
               groups:
-                - name: http_requests_per_minute
+                - name: springboot_http_requests
                   rules:
                     - expr: sum(rate(http_server_requests_seconds_count[1m])) by (pod)
                       record: http_requests_per_minute

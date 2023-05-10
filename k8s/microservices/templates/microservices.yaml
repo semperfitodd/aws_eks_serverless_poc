@@ -92,18 +92,13 @@ spec:
     - type: Pods
       pods:
         metric:
-          name: http_server_requests_seconds_count
+          name: springboot_http_requests
           selector:
             matchLabels:
               app: springboot
-          target:
-            type: AverageValue
-            averageValue: "10"
         target:
           type: AverageValue
-          averageValue: "3"
-          value: "10"
-          unit: "requests/second"
+          averageValue: "10"
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
