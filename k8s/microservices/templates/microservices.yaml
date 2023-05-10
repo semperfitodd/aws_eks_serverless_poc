@@ -103,7 +103,7 @@ spec:
       monitoring: prometheus
   endpoints:
   - port: http
-    interval: 3s
+    interval: 10s
     path: /actuator/prometheus
 {{- end }}
 {{- end }}
