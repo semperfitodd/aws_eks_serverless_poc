@@ -39,8 +39,7 @@ appEnvironments:
             url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local
           rules:
             custom:
-              - metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (pod) * on(pod)
-                  group_left kube_pod_info
+              - metricsQuery: avg(rate(http_server_requests_seconds_count{<<.LabelMatchers>>}[10s])) by (pod) * on(pod) group_left kube_pod_info
                 name:
                   as: springboot_http_requests
                   matches: ^http_server_requests_seconds_count$
