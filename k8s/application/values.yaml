@@ -10,6 +10,6 @@ apps:
         replicas: 1
       - name: springboot-1
         image:
-          repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:0
+          repo: 704855531002.dkr.ecr.us-east-2.amazonaws.com/aws_eks_serverless_poc_springboot_1:1
         containerPort: 8080
         replicas: 1
