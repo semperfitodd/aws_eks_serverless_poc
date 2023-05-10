@@ -31,47 +31,58 @@ appEnvironments:
           - mountPath: /etc/adapter
             name: adapter-config
           extraVolumes:
-            - configMap:
-                name: prometheus-adapter
-              name: adapter-config
+          - configMap:
+              name: prometheus-adapter
+            name: adapter-config
           prometheus:
             port: 9090
             url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local
           rules:
             custom:
-              - metricsQuery: avg(rate(http_server_requests_seconds_count{<<.LabelMatchers>>}[10s])) by (pod) * on(pod) group_left kube_pod_info
+              - metricsQuery: avg(rate(springboot_http_requests{<<.LabelMatchers>>}[10s])) by (pod) * on(pod) group_left kube_pod_info
                 name:
-                  as: springboot_http_requests
-                  matches: ^http_server_requests_seconds_count$
+                  as: http_requests_per_minute
+                  matches: ^(.*)_count
                 resources:
                   template: <<.Resource>>
-                seriesQuery: '{__name__=~"^http_server_requests_seconds_count$", namespace="springboot",
-                    job="springboot-1-service-monitor"}'
+                seriesQuery: '{__name__=~"^springboot_http_requests$", namespace="springboot", job="springboot-1-service-monitor"}'
     prometheusStack:
       values:
         prometheus:
+          additionalScrapeConfigs:
+            - honor_labels: true
+              job_name: springboot-1-service-monitor
+              kubernetes_sd_configs:
+                - namespaces:
+                    names:
+                      - springboot
+                  role: endpoints
+              metrics_path: /actuator/prometheus
+              relabel_configs:
+                - action: keep
+                  regex: springboot-1|http
+                  source_labels:
+                    - __meta_kubernetes_service_name
+                    - __meta_kubernetes_endpoint_port_name
+              metric_relabel_configs:
+                - source_labels: [ __name__ ]
+                  regex: 'http_server_requests_seconds_count'
+                  target_label: __name__
+                  replacement: 'springboot_http_requests'
           prometheusSpec:
             rules:
               groups:
-                - name: springboot_http_requests
+                - name: http_requests_per_minute
                   rules:
-                    - expr: sum(rate(http_server_requests_seconds_count[1m])) by (pod)
+                    - expr: sum(rate(springboot_http_requests[1m])) by (pod)
                       record: http_requests_per_minute
             serviceMonitorSelector:
+              matchExpressions:
+                - key: kubernetes.io/name
+                  operator: In
+                  values:
+                    - springboot-1
+                - key: kubernetes.io/cluster-service
+                  operator: NotExists
               matchLabels:
                 app: springboot-1
-              matchExpressions:
-                - { key: kubernetes.io/name, operator: In, values: [ springboot-1 ] }
-                - { key: kubernetes.io/cluster-service, operator: NotExists }
-          additionalScrapeConfigs:
-            - job_name: 'springboot-1-service-monitor'
-              metrics_path: /actuator/prometheus
-              honor_labels: true
-              kubernetes_sd_configs:
-                - role: endpoints
-                  namespaces:
-                    names: [ 'springboot' ]
-              relabel_configs:
-                - source_labels: [ __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name ]
-                  action: keep
-                  regex: springboot-1|http
