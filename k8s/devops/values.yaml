@@ -30,22 +30,22 @@ appEnvironments:
         extraVolumeMounts:
           - mountPath: /etc/adapter
             name: adapter-config
-          extraVolumes:
+        extraVolumes:
           - configMap:
               name: prometheus-adapter
             name: adapter-config
-          prometheus:
-            port: 9090
-            url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local
-          rules:
-            custom:
-              - metricsQuery: avg(rate(springboot_http_requests{<<.LabelMatchers>>}[10s])) by (pod) * on(pod) group_left kube_pod_info
-                name:
-                  as: http_requests_per_minute
-                  matches: ^(.*)_count
-                resources:
-                  template: <<.Resource>>
-                seriesQuery: '{__name__=~"^springboot_http_requests$", namespace="springboot", job="springboot-1-service-monitor"}'
+        prometheus:
+          port: 9090
+          url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local
+        rules:
+          custom:
+            - metricsQuery: avg(rate(springboot_http_requests{<<.LabelMatchers>>}[10s])) by (pod) * on(pod) group_left kube_pod_info
+              name:
+                as: http_requests_per_minute
+                matches: ^(.*)_count
+              resources:
+                template: 'pod'
+              seriesQuery: '{__name__=~"^springboot_http_requests$", namespace="springboot", job="springboot-1-service-monitor"}'
     prometheusStack:
       values:
         prometheus:
