@@ -76,7 +76,7 @@ spec:
       port: 80
       targetPort: {{ .containerPort }}
 ---
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .name }}-hpa
@@ -87,18 +87,8 @@ spec:
     kind: Deployment
     name: {{ .name }}
   minReplicas: 1
-  maxReplicas: 20
-  metrics:
-    - type: Pods
-      pods:
-        metric:
-          name: springboot_http_requests
-          selector:
-            matchLabels:
-              app: springboot
-        target:
-          type: AverageValue
-          averageValue: "10"
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 60
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
