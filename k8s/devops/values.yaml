@@ -39,16 +39,15 @@ appEnvironments:
           url: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local
         rules:
           custom:
-            - seriesQuery: '{__name__=~"^http_server_requests_seconds_count$", namespace="springboot", job="springboot-1-service-monitor"}'
+            - seriesQuery: '{__name__=~"^http_server_requests_seconds_count$", job="springboot-1-service-monitor"}'
               resources:
-                template: "<<.Resource>>"
                 overrides:
-                  kubernetes_namespace: { resource: "namespace" }
-                  kubernetes_pod_name: { resource: "pod" }
+                  job: { resource: "service" }
+                  instance: { resource: "pod" }
               name:
                 as: "springboot_http_requests"
                 matches: ".*"
-              metricsQuery: 'avg(rate(<<.Series>>{<<.LabelMatchers>>}[10s])) by (<<.GroupBy>>)'
+              metricsQuery: 'sum(rate(<<.Series>>[10s])) by (<<.GroupBy>>)'
     prometheusStack:
       values:
         prometheus:
