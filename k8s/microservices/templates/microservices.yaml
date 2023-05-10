@@ -89,7 +89,6 @@ spec:
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 60
-  scaleDownBehavior: "scaleDown"
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
